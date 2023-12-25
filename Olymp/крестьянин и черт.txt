@@ -1,0 +1,8 @@
+maxN = int(input())
+count = 0
+for n in range(1,maxN+1):
+    for z in range(1,54):
+        k=(n*2**z)/(2**z-1)
+        if k.is_integer():
+            count+=1
+print(count)
