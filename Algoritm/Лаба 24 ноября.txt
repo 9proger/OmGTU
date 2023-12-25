@@ -1,0 +1,60 @@
+using System;
+//Дан массив студентов. Выполнить вывод студентов по году рождения, номеру группы
+class Student
+{
+    public string Fio{get;set;}
+    public int Birth_date{get;set;}
+    public string group_number{get;set;}
+    public Student(string fio,int age,string group)
+    {
+        Fio=fio;
+        Birth_date=age;
+        group_number=group;
+    }
+    public void print()
+    {
+        Console.WriteLine($"Фио: {Fio}\nГод рождения: {Birth_date}\nГруппа: {group_number}");
+    }
+    public void Otbor1(Student[] Massive, string otbor)
+    {
+        for(int i=0;i<Massive.Length;i++)
+        {
+            if (Massive[i].group_number==otbor)
+            {
+                Console.WriteLine($"Фио: {Massive[i].Fio}\nГод рождения: {Massive[i].Birth_date}\nГруппа: {Massive[i].group_number}");
+            }
+        }
+    }
+    public void OtborPoGryppe(Student[] Massive, string otbor)
+    {
+        for(int i=0;i<Massive.Length;i++)
+        {
+            if (Massive[i].group_number==otbor)
+            {
+                Console.WriteLine($"Фио: {Massive[i].Fio}\nГод рождения: {Massive[i].Birth_date}\nГруппа: {Massive[i].group_number}");
+            }
+        }
+    }
+    public void OtborPoGody(Student[] Massive, int otbor)
+    {
+        for(int i=0;i<Massive.Length;i++)
+        {
+            if (Massive[i].Birth_date==otbor)
+            {
+                Console.WriteLine($"Фио: {Massive[i].Fio}\nГод рождения: {Massive[i].Birth_date}\nГруппа: {Massive[i].group_number}");
+            }
+        }
+    }
+}
+
+
+class HelloWorld {
+  static void Main() {
+    Student chel1 = new Student("Зубенко Михаил Петрович",1991,"Мафиози в законе");
+    Student chel2 = new Student("Мартиросян Иван Михайлович",1991,"Мафиози");
+    Student chel3 = new Student("Хренова Гадя Петрович",1995,"Мафиози");
+    Student[] Massive=new Student[]{chel1,chel2,chel3};
+    Massive[0].OtborPoGryppe(Massive, "Мафиози");
+    Massive[0].OtborPoGody(Massive, 1991);
+  }
+}
