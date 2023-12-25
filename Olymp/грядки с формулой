@@ -1,0 +1,6 @@
+l=7
+n=5
+m=10
+k=int(input())
+S=2*(k*(l+n)+m*((k*(k+1))//2))
+print(S)
