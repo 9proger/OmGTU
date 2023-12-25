@@ -1,0 +1,51 @@
+using System;
+class HelloWorld {
+    //Дано n пар элементов Найти максимальную сумму кратную трём
+  static void Main() {
+    Console.Write("Количество пар: ");
+    int n=Convert.ToInt32(Console.ReadLine());
+    int min1=-1;
+    int min2=-1;
+    int itog=0;
+    for (int i=0;i<n;i++)
+    {
+        Console.Write("Первый элемент пары: ");
+        int a=Convert.ToInt32(Console.ReadLine());
+        Console.Write("Второй элемент пары: ");
+        int b=Convert.ToInt32(Console.ReadLine());
+        if (a>=b)
+        {
+            itog+=a;
+        }
+        else
+        {
+            itog+=b;
+        }
+        if (((Math.Abs(a-b))%3==1 & (Math.Abs(a-b))<min1) || ((Math.Abs(a-b))%3==1 & min1==-1))
+        {
+            min1=(Math.Abs(a-b));
+        }
+        if ((Math.Abs(a-b))%3==2 & (Math.Abs(a-b))<min2 || ((Math.Abs(a-b))%3==2 & min2==-1))
+        {
+            min2=(Math.Abs(a-b));
+        }
+    }
+    if (itog%3==0)
+    {
+        Console.WriteLine("Максимальная сумма "+itog);
+    }
+    else if (itog%3==1 & (itog-min1)%3==0)
+    {
+        Console.WriteLine($"Максимальная сумма {itog-min1}");
+    }
+    else if (itog%3==2 & (itog-min2)%3==0)
+    {
+        Console.WriteLine($"Максимальная сумма {itog-min2}");
+    }
+    else
+    {
+        Console.WriteLine("Невозможно");
+    }
+    
+  }
+}
