@@ -1,0 +1,34 @@
+X,Y,L,C1,C2,C3,C4,C5,C6=map(int,input().split())
+if (L>Y and (L-Y)<X and C3<C1 and ((C4+C5)>C1 or (C4+C5)>C3) and C2+C3>C1):
+    itog=Y*C1+(L-Y)*(C2+C3)+(2*X+2*Y-L)*(C4+C5)
+
+if (L<Y and C1<C2+C3):
+    itog=L*C1+(2*X+2*Y-L)*(C4+C5)
+
+if (L>Y and (L-Y)<X and C3>C1):
+    itog=Y*C1+(L-Y)*(C2+C6)+(2*X+Y)*(C4+C5)
+
+if (L>Y and (L-Y)<X and ((C2+C3)*Y<C1*Y+(L-Y)*(C2+C3)) and C2+C3<C1):
+    itog=L*(C2+C3)+(2*X+2*Y-L)*(C4+C5)
+
+if (L<Y and ((C2+C3)*Y<C1*Y) and C2+C3<C1):
+    itog=L*(C2+C3)+(2*X+2*Y-L)*(C4+C5)
+
+if (L>Y and (C4+C5)<C1  and L<2*X+2*Y):
+    itog=L*(C2+C6)+(2*X+2*Y)*(C4+C5)
+
+if (L>Y and (L-Y)>X and L<=2*X+2*Y):
+    itog=Y*C1+(C2+C3)*(L-Y)+(C4+C5)*(2*X+2*Y-L)
+
+if (L>2*X+2*Y and C2+C3>C1 and C4+C5>C3):
+    itog=Y*C1+(L-Y)*C2+(2*X+Y)*C3+(L-2*X-2*Y)*C6
+
+if (L>2*X+2*Y and C2+C3<C1):
+    itog=Y*(C2+C3)+(L-Y)*C2+(2*X+Y)*C3+(L-2*X-2*Y)*C6
+
+if (L>2*X+2*Y and C4+C5<C3 and C3>C6):
+    itog=L*(C2+C6)+(2*X+2*Y)*(C4+C5)
+
+if (L>2*X+2*Y and C2+C3>C1 and C6>C2):
+    itog=Y*C1+(L-Y)*C2+(2*X+Y)*C3+(L-2*X-2*Y)*C6
+print(itog)
