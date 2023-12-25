@@ -1,0 +1,163 @@
+Mass=[['60 14 30', '20 0 20', '60 7 20'],['60 14 30', '20 0 0', '60 0 20'],['60 60 60', '30 0 30', '20 60 20'],['60 60 60', '40 0 10', '50 60 40'],['12 56 99', '12 23 67', '5 56 1'],['12 56 99', '0 23 67', '5 0 1'],['12 56 99', '12 23 67', '5 0 1'], ['12 56 99', '0 23 67', '5 56 1'], ['12 56 99', '7 0 45', '2 50 99'], ['12 56 99', '7 56 45', '2 50 0'], ['12 56 99', '0 50 45', '9 11 0'], ['12 56 99', '12 12 12', '3 12 99'], ['12 56 99', '0 0 99', '12 56 0'], ['12 56 99', '0 0 0', '12 0 99'], ['12 56 99', '5 56 94', '5 56 4'], ['12 56 99', '12 56 94', '12 56 4'], ['12 56 99', '4 0 99', '8 0 99'], ['12 56 99', '0 3 0', '0 20 0'], ['12 56 99', '0 5 5', '0 10 10'], ['12 56 99', '5 56 45', '5 56 45']]
+input=int(input('Напишите номер Input и нажмите enter: '))
+a, b, c = map(int, Mass[input-1][0].split())
+Sx, Sy, Sz = map(int, Mass[input-1][1].split())
+Fx, Fy, Fz = map(int, Mass[input-1][2].split())
+P1x, P1y, P1z = -1, -1, -1
+rast = 0
+dlina1 = 0
+dlina2 = 0
+high = 0
+if (Sx == Fx == a) or (Sy == Fy == b) or (Sz == Fz == c) or (Sx == Fx == 0) or (Sy == Fy == 0) or (Sz == Fz == 0):
+    if (Sx==Fx==a or Sx==Fx==0):
+        rast = (((Fy - Sy) ** 2) + ((Fz - Sz) ** 2)) ** 0.5
+    elif (Sy==Fy==b or Sy==Fy==0):
+        rast = (((Fx - Sx) ** 2) + ((Fz - Sz) ** 2)) ** 0.5
+    elif (Sz==Fz==c or Sz==Fz==0):
+        rast = (((Fx - Sx) ** 2) + ((Fy - Sy) ** 2)) ** 0.5
+    print(round(rast, 3))
+
+elif ((Sx == a and Fx == 0) or (Sx == 0 and Fx == a)) or ((Sy == b and Fy == 0) or (Sy == 0 and Fy == b)) or (
+        (Sz == c and Fz == 0) or (Sz == 0 and Fz == c)):
+    i = []
+    if ((Sx == a and Fx == 0) or (Sx == 0 and Fx == a)):
+        # YZ
+        dlina1, dlina2 = (b - Sy), (b - Fy)
+        high = abs(Sx - Fx)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sy), (Fy)
+        high = abs(Sx - Fx)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # YX
+        dlina1, dlina2 = (b - Sy), (b - Fy)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sy), (Fy)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # ZY
+        dlina1, dlina2 = (c - Sz), (c - Fz)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sz), (Fz)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # ZX
+        dlina1, dlina2 = (c - Sz), (c - Fz)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sz), (Fz)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        print(round(min(i),3))
+    elif ((Sy == b and Fy == 0) or (Sy == 0 and Fy == b)):
+        # XY
+        dlina1, dlina2 = (a - Sx), (a - Fx)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sx), (Fx)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # XZ
+        dlina1, dlina2 = (a - Sx), (a - Fx)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sx), (Fx)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # ZY
+        dlina1, dlina2 = (c - Sz), (c - Fz)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sz), (Fz)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # ZX
+        dlina1, dlina2 = (c - Sz), (c - Fz)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sz), (Fz)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        print(round(min(i),3))
+    elif ((Sz == c and Fz == 0) or (Sz == 0 and Fz == c)):
+        # XY
+        dlina1, dlina2 = (a - Sx), (a - Fx)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sx), (Fx)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + b) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # XZ
+        dlina1, dlina2 = (a - Sx), (a - Fx)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sx), (Fx)
+        high = abs(Sy - Fy)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # YZ
+        dlina1, dlina2 = (b - Sy), (b - Fy)
+        high = abs(Sx - Fx)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sy), (Fy)
+        high = abs(Sx - Fx)
+        rast = ((dlina1 + dlina2 + c) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        # YX
+        dlina1, dlina2 = (b - Sy), (b - Fy)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        dlina1, dlina2 = (Sy), (Fy)
+        high = abs(Sz - Fz)
+        rast = ((dlina1 + dlina2 + a) ** 2 + high ** 2) ** 0.5
+        i.append(rast)
+        print(round(min(i),3))
+else:
+    if (Sx == a or Sx == 0):
+        P1x = Sx
+    if (Fx == a or Fx == 0):
+        P1x = Fx
+    if (Sy == b or Sy == 0):
+        P1y = Sy
+    if (Fy == b or Fy == 0):
+        P1y = Fy
+    if (Sz == c or Sz == 0):
+        P1z = Sz
+    if (Fz == c or Fz == 0):
+        P1z = Fz
+    if P1x == -1:
+        dlina1 = ((Sy - P1y) ** 2 + (Sz - P1z) ** 2) ** 0.5
+        dlina2 = ((Fy - P1y) ** 2 + (Fz - P1z) ** 2) ** 0.5
+        high = abs(Sx - Fx)
+    if P1y == -1:
+        dlina1 = ((Sx - P1x) ** 2 + (Sz - P1z) ** 2) ** 0.5
+        dlina2 = ((Fx - P1x) ** 2 + (Fz - P1z) ** 2) ** 0.5
+        high = abs(Sy - Fy)
+    if P1z == -1:
+        dlina1 = ((Sy - P1y) ** 2 + (Sx - P1x) ** 2) ** 0.5
+        dlina2 = ((Fy - P1y) ** 2 + (Fx - P1x) ** 2) ** 0.5
+        high = abs(Sz - Fz)
+    rast = ((dlina1 + dlina2) ** 2 + high ** 2) ** 0.5
+    print(round(rast,3))
