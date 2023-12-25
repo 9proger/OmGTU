@@ -1,0 +1,90 @@
+using System;
+class HelloWorld {
+    //Дан двумерный массив. Нужно найти Минимельный элемент выбранной строки, Максимальный элемент выбранного столбца и перемешать массив
+    //(первая строка со второй, третья с четвёртой и тд)
+  static int[,] OverflowMassive(int[,] a, int m, int n)
+  {
+      for (int i=0;i<m;i++)
+      {
+          for (int j=0;j<n;j++)
+          {
+              Console.Write("Элемент массива: ");
+              a[i,j]=Convert.ToInt32(Console.ReadLine());
+          }
+      }
+      return a;
+  }
+   static int Min(int[,] b, int stroka)
+  {
+      int min=b[stroka-1,0];
+      for (int i=0;i<b.Length/b.GetLength(0);i++)
+      {
+          if (b[stroka-1,i]<min)
+          {
+              min=b[stroka-1,i];
+          }
+      }
+      return min;
+  }
+  static int Max(int[,] b, int stolbec)
+  {
+      int max=b[0,stolbec-1];
+      for (int i=0;i<b.GetLength(0);i++)
+      {
+          if (b[i,stolbec-1]>max)
+          {
+              max=b[i,stolbec-1];
+          }
+      }
+      return max;
+  }
+  static int[,] perestanovka(int[,] a,int m,int n)
+  {
+      int[,] Arr=new int[a.GetLength(0),a.Length/a.GetLength(0)];
+      for(int i=0;i<a.GetLength(0);i=i+2)
+      {
+        if (i!=a.GetLength(0)-1)
+        {
+           for (int j=0;j<a.Length/a.GetLength(0);j++)
+            {
+                Arr[i+1,j]=a[i,j];
+            }
+            for (int j=0;j<a.Length/a.GetLength(0);j++)
+            {
+                Arr[i,j]=a[i+1,j];
+            } 
+        }
+        else
+        {
+            for (int j=0;j<a.Length/a.GetLength(0);j++)
+            {
+                Arr[i,j]=a[i,j];
+            }
+        }
+      }
+      return Arr;
+  }
+  
+  static void Main() {
+    Console.Write("Количество строк: ");
+    int m=Convert.ToInt32(Console.ReadLine());
+    Console.Write("Количество столбцов: ");
+    int n=Convert.ToInt32(Console.ReadLine());
+    int[,] massive = new int[m,n];
+    massive = OverflowMassive(massive,m,n);
+    Console.WriteLine("Минимельный элемент строки 1 ="+Min(massive,1));
+    Console.WriteLine("Максимальный элемент столбца 1 ="+Max(massive,1));
+    int [,] Arr=perestanovka(massive,m,n);
+    Console.WriteLine("Перемешанный массив: ");
+    for (int i=0;i<m;i++)
+    {
+        for (int j=0;j<n;j++)
+        {
+            Console.Write(Arr[i,j]);
+        }
+        Console.WriteLine();
+    }
+    
+    
+  }
+}
