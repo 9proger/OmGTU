@@ -1,0 +1,77 @@
+using System;
+class Program
+//Дан родительский класс "Сотрудник" и два дочерних "основной","вспомогательный". Нужно вывести сколько кредитов выдал каждый основной сотрудник
+//сколько раз повторяется зарплата вспомогательных сотрудников
+{
+    static void Main()
+    {
+        string[] Credits1=new string[]{"2345","23213","12121"};
+        string[] Credits2=new string[]{"2345","23213"};
+        string[] Credits3=new string[]{"2345","23213","353434343"};
+        OsnovnoyPersonal chel1=new OsnovnoyPersonal(Credits1,"Грегорий"); 
+        OsnovnoyPersonal chel2=new OsnovnoyPersonal(Credits2,"Антон");   
+        OsnovnoyPersonal chel3=new OsnovnoyPersonal(Credits3,"ЖАбка");   
+        VspomogatelniyPersonal chel4=new VspomogatelniyPersonal(2300,"Емоё");
+        VspomogatelniyPersonal chel5=new VspomogatelniyPersonal(2300,"Артем");
+        VspomogatelniyPersonal chel6=new VspomogatelniyPersonal(2300232,"Олег");
+        OsnovnoyPersonal[] Massive=new OsnovnoyPersonal[]{chel1,chel2,chel3};
+        VspomogatelniyPersonal[] Massive1=new VspomogatelniyPersonal[]{chel4,chel5,chel6};
+        for(int i=0;i<Massive.Length;i++)
+        {
+            Console.WriteLine($"Сотрудник: {Massive[i].Name} Количество кредитов: {Massive[i].Credits.Length}");
+        }
+        int[] zarplata=new int[Massive1.Length];
+        int count=0;
+        for(int i=0;i<Massive1.Length;i++)
+        {
+            if (Array.IndexOf(zarplata,Massive1[i].Money)==-1)
+            {
+                zarplata[count]=Massive1[i].Money;
+                count+=1;
+            }
+        }
+        int brount=0;
+        for(int i=0;i<count;i++)
+        {
+            for(int j=0;j<Massive1.Length;j++)
+            {
+                if (Massive1[j].Money==zarplata[i])
+                {
+                    brount+=1;
+                }
+            }
+            Console.WriteLine($"Зарплата: {zarplata[i]} повторяется {brount} раз(а)");
+            brount=0;
+        }
+        
+        
+        
+    }
+}
+
+
+class Sotrudnik
+{
+    public string Name{get;set;}
+    public Sotrudnik(string Name)
+    {
+        this.Name=Name;
+    }
+}
+class OsnovnoyPersonal:Sotrudnik
+{
+    public string[] Credits{get;set;}
+    public OsnovnoyPersonal(string[] Credits, string Name):base(Name)
+    {
+        this.Credits=Credits;
+    }
+}
+class VspomogatelniyPersonal:Sotrudnik
+{
+    public int Money{get;set;}
+    public VspomogatelniyPersonal(int Money, string Name):base(Name)
+    {
+        this.Money=Money;
+    }
+    
+}
