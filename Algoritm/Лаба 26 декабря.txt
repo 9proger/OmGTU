@@ -1,0 +1,49 @@
+//Дан массив планет(их название и количество чпутников). Нужно вывести список планет по убыванию их спутников
+using System;
+class Planet {
+    public string Name;
+    public int Sputnik;
+    public Planet(string Name, int Sputnik)
+    {
+        this.Name=Name;
+        this.Sputnik=Sputnik;
+    }
+
+
+}
+class HelloWorld {
+  static void Main() {
+    Planet planet1=new Planet("Бёкла",3);
+    Planet planet2=new Planet("Лупа",5);
+    Planet planet3=new Planet("Чих",2);
+    Planet planet4=new Planet("Крико",3);
+    Planet planet5=new Planet("Жижа",4);
+    Planet planet6=new Planet("Каго",1);
+    Planet[] Planets=new Planet[]{planet1, planet2, planet3, planet4, planet5, planet6};
+    int[] Sputniks=new int[Planets.Length];
+    for (int i=0;i<Planets.Length;i++)
+    {
+        Sputniks[i]=Planets[i].Sputnik;
+    }
+    int count=0;
+    int a=0;
+    Array.Sort(Sputniks);
+    Array.Reverse(Sputniks);
+    while (count<Sputniks.Length)
+    {
+        if (Sputniks[count]==Planets[a].Sputnik)
+        {
+            Console.WriteLine($"Название: {Planets[a].Name} Количество планет: {Planets[a].Sputnik}");
+            count+=1;
+        }
+        if (a+1<Sputniks.Length)
+        {
+            a++;
+        }
+        else
+        {
+            a=0;
+        }
+    }
+  }
+}
