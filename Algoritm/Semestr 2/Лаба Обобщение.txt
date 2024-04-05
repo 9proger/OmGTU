@@ -1,0 +1,67 @@
+using System;
+class Operations<T>{
+    public T Sum(T a,T b)
+    {
+        dynamic x=a;
+        dynamic y=b;
+        return x+y;
+    }
+    public T Min(T a,T b)
+    {
+        dynamic x=a;
+        dynamic y=b;
+        return x-y;
+    }
+    public T Mul(T a,T b)
+    {
+        dynamic x=a;
+        dynamic y=b;
+        return x*y;
+    }
+    public T Div(T a,T b)
+    {
+        dynamic x=a;
+        dynamic y=b;
+        return x/y;
+    }
+    
+    
+}
+class HelloWorld {
+  static void Main() {
+    int Choice;
+    Console.WriteLine("1. работа с целыми");
+    Console.WriteLine("2. работа с вещественными");
+    int Vibor = Convert.ToInt32(Console.ReadLine());
+    if (Vibor==1)
+    {
+        Operations<int> X = new Operations<int>();
+        Console.WriteLine("Введите первое число");
+        int a=Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите второе число");
+        int b=Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Выбирите операцию \n1. Сложение \n2. Вычитание \n3. Умножение \n4. Деление");
+        Choice=Convert.ToInt32(Console.ReadLine());
+        if (Choice == 4 & b==0)Console.WriteLine("Деление на ноль невозможно ");
+        if (Choice == 1)Console.WriteLine("Сумма равна "+X.Sum(a,b));
+        if (Choice == 2)Console.WriteLine("Разность равна "+X.Min(a,b));
+        if (Choice == 3)Console.WriteLine("Умножение равно "+X.Mul(a,b));
+        if (Choice == 4 & b!=0)Console.WriteLine("Деление равно "+X.Div(a,b));
+    }
+    if (Vibor==2)
+    {
+        Operations<double> X = new Operations<double>();
+        Console.WriteLine("Введите первое число");
+        double a=Convert.ToDouble(Console.ReadLine());
+        Console.WriteLine("Введите второе число");
+        double b=Convert.ToDouble(Console.ReadLine());
+        Console.WriteLine("Выбирите операцию \n1. Сложение \n2. Вычитание \n3. Умножение \n4. Деление");
+        Choice=Convert.ToInt32(Console.ReadLine());
+        if (Choice == 4 & b==0)Console.WriteLine("Деление на ноль невозможно ");
+        if (Choice == 1)Console.WriteLine("Сумма равна "+X.Sum(a,b));
+        if (Choice == 2)Console.WriteLine("Разность равна "+X.Min(a,b));
+        if (Choice == 3)Console.WriteLine("Умножение равно "+X.Mul(a,b));
+        if (Choice == 4 & b!=0)Console.WriteLine("Деление равно "+X.Div(a,b));
+    }
+  }
+}

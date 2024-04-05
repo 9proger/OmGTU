@@ -1,0 +1,62 @@
+using System;
+interface Mat{
+    double Sum(double a, double b);
+    double Min(double a, double b);
+    double Mult(double a, double b);
+    double Div(double a, double b);
+    double Root(double a);
+    double Sin(double a);
+    double Cos(double a);
+}
+
+class Mathemat : Mat{
+    public double Sum(double a, double b){return a+b;}
+    public double Min(double a, double b){return a-b;}
+    public double Mult(double a, double b){return a*b;}
+    public double Div(double a, double b){return a/b;}
+    public double Root(double a){return Math.Sqrt(a);}
+    public double Sin(double a){return Math.Sin(a);}
+    public double Cos(double a){return Math.Cos(a);}
+}
+
+delegate double MathBinOp(double a, double b);
+delegate double MathUnOp(double a);
+
+class HelloWorld {
+  static void Main() {
+    double a;
+    double b;
+    Mathemat math = new Mathemat();
+    MathBinOp MathBinPlus = math.Sum;
+    MathBinOp MathBinMinus = math.Min;
+    MathBinOp MathBinMultiply = math.Mult;
+    MathBinOp MathBinDivide = math.Div;
+    MathUnOp MathBinRoot = math.Root;
+    MathUnOp MathBinSinus = math.Sin;
+    MathUnOp MathBinCosinus = math.Cos;
+    Console.Write("Выберите операцию \n1. Сложение \n2. Вычитание \n3. Умножение \n4. Деление \n5. Корень \n6. Синус \n7. Косинус \n Введите цифру:");
+    int Choice = Convert.ToInt32(Console.ReadLine());
+    if (Choice>=1 & Choice<=4)
+    {
+        Console.WriteLine("Введите первое число");
+        a=Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите второе число");
+        b=Convert.ToInt32(Console.ReadLine());
+        if (Choice == 4 & b==0)Console.WriteLine("Деление на ноль невозможно ");
+        if (Choice == 1)Console.WriteLine("Сумма равна "+MathBinPlus(a,b));
+        if (Choice == 2)Console.WriteLine("Разность равна "+MathBinMinus(a,b));
+        if (Choice == 3)Console.WriteLine("Умножение равно "+MathBinMultiply(a,b));
+        if (Choice == 4 & b!=0)Console.WriteLine("Деление равно "+MathBinDivide(a,b));
+    }
+    if (Choice>=5 & Choice<=7)
+    {
+        Console.WriteLine("Введите число");
+        a=Convert.ToInt32(Console.ReadLine());
+        if (Choice == 5)Console.WriteLine("Корень равен "+MathBinRoot(a));
+        if (Choice == 6)Console.WriteLine("Синус равен "+MathBinSinus(a));
+        if (Choice == 7)Console.WriteLine("Косинус равен "+MathBinCosinus(a));
+        
+    }
+    
+  }
+}

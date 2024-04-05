@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+
+class HelloWorld
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите выражение: ");
+        string phrase = Console.ReadLine();
+        Stack<string> stack = new Stack<string>();
+        double result = 0;
+        double a;
+        double b;
+        bool err = false;
+        foreach (char c in phrase) {
+            if (c == '+' || c == '-' || c == '*' || c == '/')
+            {
+                if (stack.Count < 2) { Console.WriteLine("Ошибка: Отсутствие элемента для произведения вычисления"); err = true; break; }
+                if (stack.Count > 2) { Console.WriteLine("Ошибка: Неоднозначность результата"); err = true; break; }
+                b = Convert.ToDouble(stack.Pop()); //Выносим элемент из stack
+                a = Convert.ToDouble(stack.Pop()); //Выносим элемент из stack
+                if (b == 0) { Console.WriteLine("Ошибка: Деление на ноль"); err = true; break; }
+                if (c == '+') { result = a+b; } //Производим операцию над двумя числами
+                if (c == '-') { result = a - b; }
+                if (c == '*') { result = a * b; }
+                if (c == '/') { result = a / b; }
+                stack.Push(Convert.ToString(result)); //Возвращает результат операции в stack
+            }
+            else {
+                if (c != ' ')
+                {
+                    stack.Push(Convert.ToString(c)); //Добавляет элемент в stack
+                }
+            }
+        }
+        if (err == false & stack.Count==1) { Console.WriteLine($"Результат вычисления: {stack.Pop()}"); }
+        if (err == false & stack.Count>1) { Console.WriteLine("Ошибка: Отсутствие операции для произведения вычисления"); } 
+    }
+}
