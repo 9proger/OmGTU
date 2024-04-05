@@ -1,0 +1,48 @@
+Алгоритм нахождения компонент связности(неориент граф)
+Есть множество вершин {1,2,3,4,5,6,..,}
+Начинаем с первой вершины
+Белая вершина (не взяли еще)
+Серая взяли в лист
+Берем следующую вершину и добавляем в список, вычеркиваем из начального листа
+Если нет смежной с серой вершиной(притом, что если вершина найдена, и она серая), она становится черной и больше к ней не возвращаемся
+Смотрим первую вершину и ищем другие белые
+Если остались вершины, создаем другую вершину связности
+по тому же алгоритму
+
+graf=['12','16','21','23','24','32','34','42','43','45','54','61','78','79','87','89','97','98']
+white=['1','2','3','4','5','6','7','8','9']
+gray=[white[0]]
+black=[]
+Con=[]
+Con1=[]
+MinusPinus = []
+white.pop(0)
+#print(white)
+#print(gray)
+while len(white)!=0 or len(gray)!=0:
+    for i in gray:
+        for j in graf:
+            if i in j:
+                if i==j[0] and j[1] in white:
+                    gray.append(j[1])
+                    white.remove(j[1])
+                elif i==j[1] and j[0] in white:
+                    gray.append(j[0])
+                    white.remove(j[0])
+        black.append(i)
+        gray.remove(i)
+    if len(white)!=0 and len(gray)==0:
+        gray.append(white[0])
+        Con.append(black)
+        black = []
+Con.append(black)
+for i in Con:
+    MinusPinus.append((list(set(i))))
+
+    #if len(white)==3 and len(gray)==0:
+    #    break
+#print(white)
+#print(gray)
+#print(black)
+print(Con)
+print(MinusPinus)

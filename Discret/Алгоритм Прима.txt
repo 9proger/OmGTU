@@ -1,0 +1,81 @@
+a=['12','14','15','16','23','24','25','26','27','35','37','45','46','47','56','57','67']
+b=[4,3,6,1,2,3,7,6,1,4,2,1,5,3,3,6,7]
+ArrNum=[]
+ArrReb=[]
+CompleteReb=[]
+List=[a[0][0]]
+Ver=0
+sum=0
+while len(a)!=0:
+    for i in a:
+        if List[Ver] in i and not(a[a.index(i)] in ArrReb):
+            ArrNum.append(b[a.index(i)])
+            ArrReb.append(a[a.index(i)])
+            #print(ArrNum)
+            #print(ArrReb)
+    while Ver+1==len(List) and len(a)!=0:
+        Rebro=min(ArrNum)
+        #print(ArrReb[ArrNum.index(Rebro)][0],'787878788798')
+        if not(ArrReb[ArrNum.index(Rebro)][0] in List) or not(ArrReb[ArrNum.index(Rebro)][1] in List):
+            if (ArrReb[ArrNum.index(Rebro)][0] in List):
+                List.append(ArrReb[ArrNum.index(Rebro)][1])
+                sum += Rebro
+                CompleteReb.append(ArrReb[ArrNum.index(Rebro)])
+                b.pop(a.index(ArrReb[ArrNum.index(Rebro)]))
+                a.remove(ArrReb[ArrNum.index(Rebro)])
+                ArrReb.remove(ArrReb[ArrNum.index(Rebro)])
+                ArrNum.remove(Rebro)
+                #print('1')
+                #Ver+=1
+            elif (ArrReb[ArrNum.index(Rebro)][1] in List):
+                List.append(ArrReb[ArrNum.index(Rebro)][0])
+                sum += Rebro
+                CompleteReb.append(ArrReb[ArrNum.index(Rebro)])
+                b.pop(a.index(ArrReb[ArrNum.index(Rebro)]))
+                a.remove(ArrReb[ArrNum.index(Rebro)])
+                ArrReb.remove(ArrReb[ArrNum.index(Rebro)])
+                ArrNum.remove(Rebro)
+                #Ver+=1
+                #print('2')
+        else:
+            #print(a,'a')
+            #print(Rebro,'Rebro')
+            #print(ArrReb[ArrNum.index(Rebro)],'ArrReb[ArrNum.index(Rebro)]')
+            #print(ArrReb,'ArrReb')
+            #print(ArrNum,'ArrNum')
+            #print(a.index(ArrReb[ArrNum.index(Rebro)]),'1234')
+            b.pop(a.index(ArrReb[ArrNum.index(Rebro)]))
+            a.remove(ArrReb[ArrNum.index(Rebro)])
+            ArrReb.remove(ArrReb[ArrNum.index(Rebro)])
+            ArrNum.remove(Rebro)
+
+
+        #print(List)
+    Ver+=1
+
+
+
+
+    #print(ArrReb)
+    #print(ArrNum)
+
+#print(List)
+#print(ArrReb)
+print(CompleteReb,'Остовное дерево минимально веса')
+print(sum,'Вес графа')
+
+
+        #print(List)
+    Ver+=1
+    f+=1
+
+
+
+
+    #print(ArrReb)
+    #print(ArrNum)
+
+#print(List)
+#print(ArrReb)
+print(CompleteReb,'Остовное дерево минимально веса')
+print(sum,'Вес графа')

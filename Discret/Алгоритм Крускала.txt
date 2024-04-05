@@ -1,0 +1,71 @@
+StartArr=['12','15','14','23','24','25','35','36','45','47','48','56','58','59','78','89']
+StartNum=[15,14,23,19,16,15,14,26,25,23,20,24,27,18,14,18]
+SortArr=[]
+SortHelp=min(StartNum)
+SortHelp1=0
+Break=0
+Connector=0
+SecondCon=0
+Nelomaika=1
+while SortHelp<=max(StartNum): #Сортировка массива начальных данных (StartArr) по возрастанию
+    for i in StartNum:
+        if i==SortHelp:
+            SortArr.append(StartArr[SortHelp1])
+        SortHelp1=SortHelp1+1
+    SortHelp=SortHelp+1
+    SortHelp1=0
+print(SortArr)
+StartNum.sort()
+print(StartNum)
+                      #После задаём список списков, который будет создавать и хранить все несвязные графы
+list=[]
+listiwe=[[SortArr[0]]]
+sum=StartNum[0]
+for i in SortArr:
+    Break=0
+    Connector=0
+    for j in listiwe:
+        if Break==1:  #Сброс перечисления списка списков несвязных графов
+            break
+        for k in j: #Проверка каждого списка по отдельности
+            #print(j)
+            #print(listiwe.index(j),'---------')
+            #print(len(listiwe)-1)
+
+            if (i[0] in k) and (i[1] in k): #Если все две вершины находятся в списке, то сброс и переход к следующей ветви
+                Break=1
+            elif (not(i[0] in k) and not(i[1] in k)) and (Break!=2) and (listiwe.index(j)==len(listiwe)-1): #Если ни один элемент не подпадает в последний список (тк в ином раскладе он подподёт в предыдущие и цикл не дойдёт до последнего списка) то сброс к следующей ветви
+                #print('1')
+                listiwe.append([i])
+                #print(listiwe)
+                #print(b[c.index(i)],'b[c.index(i)]')
+                sum = sum + StartNum[SortArr.index(i)]
+                #print(sum)
+                Break=1
+            elif (not(i[0] in k) and not(i[1] in k)) and (Break!=2): #Без неё всё ломалось :(
+                Nelomaika=1
+            elif not(i[0] in k) or not(i[1] in k): #Если хоть один элемент попал в список
+                #print('2')
+                if Break!=2: #Чтобы одна и та же ветвь со смежными вершинами в разных списках не складывалась дважды
+                    sum=sum+StartNum[SortArr.index(i)]
+                if ((i[0] in k) and Connector==1) or ((i[1] in k) and Connector==1): #Запоминает один список с наличием одной из вершин с другим, который тоже имеет в наличие одну из вершин
+                    Break=1
+                    #print(listiwe[h][0],'123')
+                    listiwe[listiwe.index(j)][0] = listiwe[listiwe.index(j)][0] + listiwe[SecondCon][0]
+                    listiwe.pop(SecondCon)
+                elif i[0] in k: #Если первая вершина в списке, то добавляется вторая
+                    listiwe[listiwe.index(j)][0]=listiwe[listiwe.index(j)][0]+i[1]
+                    Connector=1
+                    Break = 2
+                    SecondCon=listiwe.index(j)
+                elif i[1] in k: #Если вторая вершина в списке, то добавляется первая
+                    listiwe[listiwe.index(j)][0] = listiwe[listiwe.index(j)][0] + i[0]
+                    Connector=1
+                    Break = 2
+            #print(f, 'f')
+    #print(listiwe)
+    #print(sum,'sum')
+
+
+print(listiwe)
+print(sum)
