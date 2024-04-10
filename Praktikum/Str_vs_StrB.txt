@@ -1,0 +1,30 @@
+using System.Text;
+using System.Diagnostics;
+Stopwatch Time = new Stopwatch();
+Time.Start();
+string Line = "0123456789";
+Random RandomElem = new Random();
+for (int i=0; i<1000000;i++)
+{
+    string Elem = Convert.ToString(RandomElem.Next(0,9));
+    Line = Line.Remove(i%10,1);
+    Line = Line.Insert(i%10,Elem);
+}
+Console.WriteLine(Line);
+Time.Stop();
+Console.WriteLine(Time.Elapsed);
+
+using System.Text;
+using System.Diagnostics;
+Stopwatch Time = new Stopwatch();
+Time.Start();
+StringBuilder Line = new StringBuilder("0123456789");
+Random RandomElem = new Random();
+for (int i = 0; i<1000000;i++)
+{
+    string Elem = Convert.ToString(RandomElem.Next(0,9));
+    Line[i%10] = Convert.ToString(Elem)[0];
+}
+Console.WriteLine(Line);
+Time.Stop();
+Console.WriteLine(Time.Elapsed);

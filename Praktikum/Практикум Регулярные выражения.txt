@@ -1,0 +1,16 @@
+using System;
+using System.Text.RegularExpressions;
+class HelloWorld {
+  static void Main() {
+    string pattern = @"[A-z0-9_-]+@[a-z]+\.[a-z]+";
+    string input = @"frhDFHSD-HS-Zrf@mail.ru   wffwfefwe@yahdh.ddo    fshhsffv@gagga.edeg  fshhsffv@ga--gga.edeg";
+    foreach (Match match in Regex.Matches(input, pattern))
+    {
+        Console.Write(match.Value+' ');
+        Console.Write(match.Index);
+        Console.WriteLine();
+    }
+  }
+}
+
+^([2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]$
