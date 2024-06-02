@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LinqSklad
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Sklad sklad1 = new Sklad("1", "Ряженка", "Кисло-молочные", 3, 102, "АО Завод");
+            Sklad sklad2 = new Sklad("2", "Сыр", "Кисло-молочные", 6, 78, "АО Завод");
+            Sklad sklad3 = new Sklad("3", "Молоко", "Кисло-молочные", 7, 39, "ООО Дача");
+            Sklad sklad4 = new Sklad("4", "Булка", "Булочные изделия", 8, 50, "ООО Дача");
+            Sklad sklad5 = new Sklad("5", "Батон", "Булочные изделия", 2, 37, "АОА Домишко");
+            Sklad sklad6 = new Sklad("6", "Эскимо", "Мороженое", 12, 62, "АОА Домишко");
+            Sklad sklad7 = new Sklad("7", "Пломбир", "Мороженое", 32, 192, "АОА Домишко");
+            Sklad sklad8 = new Sklad("8", "ручка Pilot", "Канцелярия", 42, 1000, "АО Завод");
+            Sklad sklad9 = new Sklad("9", "Дрова", "-", 9, 52, "АО Завод");
+            Sklad sklad10 = new Sklad("10", "Колья", "-", 199, 525, "АО Завод");
+            List<Sklad> Skladi = new List<Sklad> { sklad1, sklad2, sklad3, sklad4, sklad5, sklad6, sklad7, sklad8, sklad9, sklad10 };
+            var ObyomTovara =
+                from x in Skladi
+                group x by x.SkladRazmesheniya into g
+                select new Dictionary<string, int> { { g.Key, g.Sum(x => (int)x.KolichestvoTovara) } };
+            Console.WriteLine("Объем товара по складам:");
+            foreach (var i in ObyomTovara)
+            {
+                foreach (var pair in i)
+                {
+                    Console.WriteLine(pair.Key + ": " + pair.Value);
+                }
+            }
+            Console.WriteLine("-----");
+            Console.WriteLine("Максимальная цена товара по каждой категории:");
+            var MaxTsena =
+                from x in Skladi
+                group x by x.KategoriyaTovara into g
+                select new Dictionary<string, int> { { g.Key, g.Max(x => (int)x.TsenaZaEdinitsu) } };
+            foreach (var i in MaxTsena)
+            {
+                foreach (var pair in i)
+                {
+                    Console.WriteLine(pair.Key + ": " + pair.Value);
+                }
+            }
+            Console.WriteLine("-----");
+            var SrednyayaTsena =
+                (from x in Skladi
+                 where x.KategoriyaTovara == "-"
+                 select x.TsenaZaEdinitsu).Average();
+            Console.WriteLine("Средняя цена для товара без категории: " +  SrednyayaTsena);
+            Console.WriteLine("-----");
+            var SamiyDeshoviyTovar =
+                (from x in Skladi
+                select x.TsenaZaEdinitsu).Min();
+            Console.WriteLine("Самый дешевый товар со всех складов: " + SamiyDeshoviyTovar);
+            Console.WriteLine("-----");
+            var ObshayaStoimostTovarov =
+                (from x in Skladi
+                select (x.TsenaZaEdinitsu * x.KolichestvoTovara)).Sum();
+            Console.WriteLine("Общая стоимость товаров со всех складов: " + ObshayaStoimostTovarov);
+            Console.ReadLine();
+        }
+    }
+    class Sklad
+    {
+        public string NomerTovara;
+        public string NaimenovanieTovara;
+        public string KategoriyaTovara;
+        public int KolichestvoTovara;
+        public int TsenaZaEdinitsu;
+        public string SkladRazmesheniya;
+        public Sklad(string NomerTovara, string NaimenovanieTovara, string KategoriyaTovara, int KolichestvoTovara, int TsenaZaEdinitsu, string SkladRazmesheniya)
+        {
+            this.NomerTovara = NomerTovara;
+            this.NaimenovanieTovara = NaimenovanieTovara;
+            this.KategoriyaTovara = KategoriyaTovara;
+            this.KolichestvoTovara = KolichestvoTovara;
+            this.TsenaZaEdinitsu = TsenaZaEdinitsu;
+            this.SkladRazmesheniya = SkladRazmesheniya;
+        }
+    }
+}

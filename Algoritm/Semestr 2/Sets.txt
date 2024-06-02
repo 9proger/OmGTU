@@ -1,0 +1,40 @@
+class Program
+{
+    static void Main()
+    {
+        // Входные множества
+        HashSet<int> set1 = new HashSet<int> { 1, 2, 3, 4 };
+        HashSet<int> set2 = new HashSet<int> { 3, 4, 5, 6 };
+        HashSet<int> set3 = new HashSet<int> { 4, 5, 6, 7 };
+
+        // Находим пересечение множеств
+        HashSet<int> intersection = new HashSet<int>(set1);
+        intersection.IntersectWith(set2);
+        intersection.IntersectWith(set3);
+        Console.WriteLine("Пересечение множеств: {" + string.Join(", ", intersection) + "}");
+
+        // Находим объединение множеств
+        HashSet<int> union = new HashSet<int>(set1);
+        union.UnionWith(set2);
+        union.UnionWith(set3);
+        Console.WriteLine("Объединение множеств: {" + string.Join(", ", union) + "}");
+
+        // Находим дополнение каждого множества
+        HashSet<int> complement1 = new HashSet<int>(union);
+        complement1.ExceptWith(set1);
+        Console.WriteLine("Дополнение первого множества: {" + string.Join(", ", complement1) + "}");
+
+        HashSet<int> complement2 = new HashSet<int>(union);
+        complement2.ExceptWith(set2);
+        Console.WriteLine("Дополнение второго множества: {" + string.Join(", ", complement2) + "}");
+
+        HashSet<int> complement3 = new HashSet<int>(union);
+        complement3.ExceptWith(set3);
+        Console.WriteLine("Дополнение третьего множества: {" + string.Join(", ", complement3) + "}");
+
+        // Находим дополнение до объединенного множества
+        HashSet<int> complement_union = new HashSet<int>(union);
+        complement_union.ExceptWith(intersection);
+        Console.WriteLine("Дополнение до объединенного множества: {" + string.Join(", ", complement_union) + "}");
+    }
+}

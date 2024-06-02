@@ -1,0 +1,23 @@
+string Path = @"C:\Users\User\source\repos\AlgoritmizDodelat\FileEvenChisla\Text.txt";
+int count = 0;
+
+try
+{
+    StreamReader File = new StreamReader(Path);
+    string Line;
+
+    while ((Line = File.ReadLine()) != null)
+    {
+        if (Convert.ToInt32(Line) % 2 != 0)
+        {
+            count++;
+        }
+    }
+
+    Console.WriteLine("Количество пар элементов, произведение которых нечетное: " + (count * (count - 1)) / 2);
+    File.Close();
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Ошибка: " + ex.Message);
+}

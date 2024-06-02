@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Bankovskie_Scheta
+{
+    class Bank
+    {
+         public string NomerScheta;
+         public string Fio;
+         public double Dohod;
+         public double Rashod;
+         public double Nalog;
+         public Bank(string NomerScheta, string Fio, double Dohod, double Rashod)
+         {
+             this.NomerScheta = NomerScheta;
+             this.Fio = Fio;
+             this.Dohod = Dohod;
+             this.Rashod = Rashod;
+             this.Nalog = Dohod * 5 / 100;
+         }
+    }
+    
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Bank Chel1 = new Bank("1","Floyd",10000,3000);
+            Bank Chel2 = new Bank("2", "Pink", 5000, 4900);
+            Bank Chel3 = new Bank("3", "Krayne", 7000, 6800);
+            Bank Chel4 = new Bank("4", "Gregor", 10000, 5000);
+            Bank[] Humans = new Bank[4]{Chel1,Chel2,Chel3,Chel4};
+            
+            IEnumerable<Bank> Otritsateliniye = from x in Humans
+                            where (x.Dohod - x.Rashod - x.Nalog) < 0
+                            select x;
+            Console.Write("Счета с отрицательным балансом: ");
+            foreach (Bank i in Otritsateliniye)
+            {
+                Console.Write(i.NomerScheta + " ");
+            }
+            Console.WriteLine();
+            double Naibolshiy = Humans.Max(x => x.Dohod);
+            IEnumerable<Bank> Bolshoy = from x in Humans
+                                        where x.Dohod == Naibolshiy
+                                        select x;
+            Console.Write("Счета с наибольшим доходом: ");
+            foreach (Bank i in Bolshoy)
+            {
+                Console.Write(i.NomerScheta + " ");
+                
+            }
+            Console.WriteLine();
+            IEnumerable<Bank> LudiPolozh = from x in Humans
+                             where (x.Dohod - x.Rashod - x.Nalog) > 0
+                             select x;
+            Console.WriteLine("Колво людей с положительным балансом: " + LudiPolozh.Count());
+            
+            
+            double SummaNalogov = Humans.Sum(x => x.Nalog);
+            Console.Write("Общая сумма налогов: " + SummaNalogov);
+            Console.ReadLine();
+        }
+    }
+    
+  
+    
+}

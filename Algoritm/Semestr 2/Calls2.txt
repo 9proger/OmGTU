@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class CallData
+{
+    public string CallerNumber { get; set; }
+    public string ReceiverNumber { get; set; }
+    public DateTime CallDate { get; set; }
+    public int Minutes { get; set; }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<CallData> callRecords = new List<CallData>
+        {
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "666-5678", CallDate = new DateTime(2022, 1, 1), Minutes = 10 },
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "777-9876", CallDate = new DateTime(2022, 1, 1), Minutes = 15 },
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "666-5678", CallDate = new DateTime(2022, 1, 2), Minutes = 20 },
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "888-2468", CallDate = new DateTime(2022, 1, 2), Minutes = 25 },
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "888-2468", CallDate = new DateTime(2022, 1, 2), Minutes = 25 },
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "887-2468", CallDate = new DateTime(2022, 1, 2), Minutes = 25 },
+            new CallData { CallerNumber = "555-1234", ReceiverNumber = "887-2468", CallDate = new DateTime(2022, 1, 2), Minutes = 26 }
+        };
+
+        var mostTalkedNumbersByDate = callRecords
+            .GroupBy(call => new { call.CallDate, call.CallerNumber })
+            .Select(group => new
+            {
+                Date = group.Key.CallDate,
+                CallerNumber = group.Key.CallerNumber,
+                MostTalkedReceiverNumber = group
+                    .GroupBy(call => call.ReceiverNumber)
+                    .Select(grp => new
+                    {
+                        ReceiverNumber = grp.Key,
+                        TotalMinutes = grp.Sum(call => call.Minutes)
+                    })
+                    .OrderByDescending(data => data.TotalMinutes)
+                    .First()
+            })
+            .GroupBy(data => data.Date)
+            .SelectMany(group => group.Select(data => new
+            {
+                Date = data.Date,
+                CallerNumber = data.CallerNumber,
+                ReceiverNumber = data.MostTalkedReceiverNumber.ReceiverNumber,
+                TotalMinutes = data.MostTalkedReceiverNumber.TotalMinutes
+            }))
+            .ToList();
+
+        foreach (var data in mostTalkedNumbersByDate)
+        {
+            Console.WriteLine($"Дата: {data.Date}, Абонент: {data.CallerNumber}, говорил больше всего с: {data.ReceiverNumber}, Общее количество минут: {data.TotalMinutes}");
+        }
+
+    }
+}

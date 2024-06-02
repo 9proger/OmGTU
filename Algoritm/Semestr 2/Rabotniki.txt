@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Rabotniki
+{
+    class Rabotniki
+    {
+        public string NomerRabotnika;
+        public string FioRabotnika;
+        public string Obrazovanie;
+        public string Spetsialnost;
+        public int Zarplata;
+        public int KolvoProizvedTovarov;
+        public int TsenaTovaraZaEdinitsu;
+        public Rabotniki(string NomerRabotnika, string FioRabotnika, string Obrazovanie, string Spetsialnost, int Zarplata, int KolvoProizvedTovarov, int TsenaTovaraZaEdinitsu)
+        {
+            this.NomerRabotnika = NomerRabotnika;
+            this.FioRabotnika = FioRabotnika;
+            this.Obrazovanie = Obrazovanie;
+            this.Spetsialnost = Spetsialnost;
+            this.Zarplata = Zarplata;
+            this.KolvoProizvedTovarov = KolvoProizvedTovarov;
+            this.TsenaTovaraZaEdinitsu = TsenaTovaraZaEdinitsu;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Rabotniki chel1 = new Rabotniki("1", "Грегорян", "Высшее", "Сварщик", 10000, 5000, 200);
+            Rabotniki chel2 = new Rabotniki("2", "Гукасян", "Высшее", "Инженер", 10000, 5, 200);
+            List <Rabotniki> rabot = new List<Rabotniki>{chel1,chel2};
+            IEnumerable<string> SotrudnikiSummaProduktsii =
+                from x in rabot
+                where x.Zarplata < (x.KolvoProizvedTovarov * x.TsenaTovaraZaEdinitsu)
+                select x.NomerRabotnika;
+            Console.Write("Номера работников, у которых зарплата меньше чем сумм вырабатываемой ими продукции: ");
+            if (SotrudnikiSummaProduktsii.Count() == 0) Console.WriteLine("таких сотрудников нет.");
+            else
+            {
+                foreach (string i in SotrudnikiSummaProduktsii)
+                {
+                    Console.Write(i + " ");
+                }
+            }
+            Console.WriteLine();
+            var KolvoEdinitzPoKazhdomu =
+                from x in rabot
+                group x by x.NomerRabotnika into g
+                select new { Nomer = g.Key, Kolvo =g.Sum(x => (int)x.KolvoProizvedTovarov )};
+            foreach (var i in KolvoEdinitzPoKazhdomu)
+            {
+                Console.WriteLine("Номер сотрудника: " + i.Nomer + "; количество производимой им продукции: " + i.Kolvo);
+            }
+            var SummarniyObyomProduktov =
+                (from x in rabot
+                select x.KolvoProizvedTovarov).Sum();
+            Console.WriteLine("Суммарное количество произведенной продукции: " + SummarniyObyomProduktov);
+            var KolvoSotrudnikov =
+                (from x in rabot
+                 where (x.Zarplata >= (x.KolvoProizvedTovarov * x.TsenaTovaraZaEdinitsu) * 0.5)
+                 select x.NomerRabotnika).Count();
+            Console.WriteLine("Количество сотрудников, которые получают не менее 50% от суммы производимого продукта: " + KolvoSotrudnikov);
+            Console.ReadLine();
+        }
+    }
+    
+}

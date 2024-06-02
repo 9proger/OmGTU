@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Linq1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> Spisok = new List<string> { "Зачем", "Ei", "Vse", "Shelka", "Tsvetniye", "Oblaka", "3achemVseEto", "3acheemm", "Мармеладка", "Pes" };
+            List<string> G = GetText(Spisok).ToList();
+            int Count = Spisok.Count();
+            Console.WriteLine("Первая выборка");
+            foreach (string i in G)
+            {
+                Console.WriteLine(i);
+            }
+            Console.WriteLine("-------");
+            Console.WriteLine("После удаления каждого второго элемента:");
+            if (Count % 2 != 0)
+            {
+                for (int i = Count - 2; i > 0; i--)
+                {
+                    if (i % 2 != 0)
+                    {
+                        Spisok.RemoveAt(i);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = Count - 1; i > 0; i--)
+                {
+                    if (i % 2 != 0)
+                    {
+                        Spisok.RemoveAt(i);
+                    }
+                }
+            }
+            foreach (string i in Spisok)
+            {
+                Console.WriteLine(i);
+            }
+            G = GetText(Spisok).ToList();
+            Console.WriteLine("------");
+            Console.WriteLine("Второе использование выборки:");
+            foreach (string i in G)
+            {
+                Console.WriteLine(i);
+            }
+            Console.ReadLine();
+        }
+        public static IEnumerable<string> GetText(List<string> Spisok)
+        {
+            var P =
+                from x in Spisok
+                where x.Length % 2 == 0
+                select x;
+            return P;
+        }
+
+    }
+}

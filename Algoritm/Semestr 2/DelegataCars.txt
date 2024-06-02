@@ -1,0 +1,68 @@
+// Класс для представления автомобиля
+class Car
+{
+    public string Model { get; set; }
+
+    public Car(string model)
+    {
+        Model = model;
+    }
+}
+
+// Класс для представления мойки
+class CarWash
+{
+    public void WashCar(Car car)
+    {
+        Console.WriteLine($"Моем автомобиль {car.Model}");
+        // Реализация очистки автомобиля
+    }
+}
+
+// Класс для представления гаража
+class Garage
+{
+    private List<Car> cars = new List<Car>();
+    private CarWash carWash;
+
+    public Garage(CarWash wash)
+    {
+        carWash = wash;
+    }
+
+    public void AddCar(Car car)
+    {
+        cars.Add(car);
+    }
+
+    public void CleanAllCars()
+    {
+        foreach (var car in cars)
+        {
+            carWash.WashCar(car);
+        }
+        Console.WriteLine("Все автомобили помыты.");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Создаем мойку
+        CarWash carWash = new CarWash();
+
+        // Создаем гараж и передаем ему ссылку на мойку
+        Garage garage = new Garage(carWash);
+
+        // Добавляем автомобили в гараж
+        garage.AddCar(new Car("Toyota"));
+        garage.AddCar(new Car("BMW"));
+        garage.AddCar(new Car("Audi"));
+
+        // Очищаем все автомобили в гараже
+        garage.CleanAllCars();
+
+        Console.ReadLine();
+    }
+}
