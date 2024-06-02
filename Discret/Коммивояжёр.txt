@@ -1,0 +1,63 @@
+import math
+inf = math.inf
+Matrix = [
+[inf,11,12,13,10],
+[4,inf,6,7,10],
+[5,4,inf,2,11],
+[3,5,4,inf,12],
+[2,3,4,5,inf]
+]
+Stolbec=[inf]*len(Matrix)
+Stroka=[inf]*len(Matrix)
+Line1=[i for i in range(1,len(Matrix)+1)]
+Line2=[i for i in range(1,len(Matrix)+1)]
+way=[]
+road=0
+score=1
+while len(Matrix)!=2:
+Stolbec = [inf] * len(Matrix)
+Stroka = [inf] * len(Matrix)
+minimal=[inf]*len(Matrix)
+for i in range(len(Matrix)):
+Stolbec[i]=min(Matrix[i])
+for j in range(len(Matrix)):
+Matrix[i][j]=Matrix[i][j]-Stolbec[i]
+for i in range(len(Matrix)):
+minimal = [inf] * len(Matrix)
+for j in range(len(Matrix)):
+minimal[j]=(Matrix[j][i])
+Stroka[i]=min(minimal)
+for j in range(len(Matrix)):
+Matrix[j][i]=Matrix[j][i]-Stroka[i]
+max=-1
+result=''
+for i in range(len(Matrix)):
+for j in range(len(Matrix)):
+if Matrix[i][j]==0:
+Matrix[i][j]=inf
+if (min(Matrix[i])+min(Matrix[k][j] for k in range(len(Matrix))))>=max:
+max=min(Matrix[i])+min(Matrix[k][j] for k in range(len(Matrix)))
+result=str(Line1[i])+str(Line2[j])
+Matrix[i][j] = 0
+way.append(result)
+if int(result[1]) in Line1 and int(result[0]) in Line2:
+Matrix[Line1.index(int(result[1]))][Line2.index(int(result[0]))]=inf
+for i in range(len(Matrix)):
+Matrix[i].pop(Line2.index(int(result[1])))
+Matrix.pop(Line1.index(int(result[0])))
+Line1.remove(int(result[0]))
+Line2.remove(int(result[1]))
+score+=1
+
+road=road+sum(Stolbec)+sum(Stroka)
+way.append(str(Line1[0])+str(Line2[1]))
+way.append(str(Line1[1])+str(Line2[0]))
+
+path=way[0]
+while path[0]!=path[-1]:
+for i in way:
+if path[-1]==i[0]:
+path=path+"->"+i
+break
+print("Длина пути: ", road)
+print("Путь: ", path)

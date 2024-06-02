@@ -1,0 +1,47 @@
+import math
+inf = math.inf
+Matrix = [[0,10,18,8,inf,inf],
+          [10,0,16,9,21,inf],
+          [inf,16,0,inf,inf,15],
+          [7,9,inf,0,inf,12],
+          [inf,inf,inf,inf,0,23],
+          [inf,inf,15,inf,23,0]]
+for i in range(len(Matrix)):
+    for j in range(len(Matrix)):
+        for k in range(len(Matrix)):
+            Matrix[j][k]=min(Matrix[j][i] + Matrix[i][k], Matrix[j][k])
+for i in range (len(Matrix)):
+    print(Matrix[i])
+Start, Finish = str(input("Напишите между какими вершинами будет восстанавливаться путь(вершины задаются через пробел): ")).split(' ')
+Start=int(Start)-1
+Finish=int(Finish)-1
+OrigMatrix = [[0,10,18,8,inf,inf],
+          [10,0,16,9,21,inf],
+          [inf,16,0,inf,inf,15],
+          [7,9,inf,0,inf,12],
+          [inf,inf,inf,inf,0,23],
+          [inf,inf,15,inf,23,0]]
+Mass=[Start,Finish]
+check=0
+input=1
+j=0
+k=1
+while check!=input:
+    for i in range (len(Matrix)):
+        if Matrix[Mass[j]][Mass[k]]==OrigMatrix[Mass[j]][Mass[k]]:
+            check+=1
+            j+=1
+            k+=1
+            break
+        if not(i in Mass):
+            if Matrix[Mass[j]][Mass[k]]==Matrix[Mass[j]][i]+Matrix[i][Mass[k]]:
+                input+=1
+                check=0
+                j=0
+                k=1
+                Mass.insert(Mass.index(Mass[k]), i)
+                break
+road=''
+for i in Mass:
+    road=road+str(i+1)+'->'
+print(road[:-2])

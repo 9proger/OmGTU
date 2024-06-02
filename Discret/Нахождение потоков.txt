@@ -1,0 +1,87 @@
+import math
+from copy import deepcopy
+inf=math.inf
+Mass=[[inf, 7, 18, 19, inf, inf, inf],
+      [inf, inf, 15, inf, 17, 12, inf],
+      [inf, inf, inf, inf, inf, 11, inf],
+      [inf, inf, 14, inf, inf, 13, inf],
+      [inf, inf, inf, 15, inf, inf, 10],
+      [inf, inf, inf, inf, 18, inf, 15],
+      [inf, inf, inf, inf, inf, inf, inf],
+      ]
+Copy=deepcopy(Mass)
+Check=[inf]*len(Mass)
+for x in range (len(Mass)):
+    Mass1=deepcopy(Mass)
+    stroka =[inf]*len(Mass)
+    stolbec=[0]*len(Mass)
+    List=[]
+    min=inf
+    start=1       #Начало
+    end=len(Mass)         #Конец
+    j=0
+    startpos=start
+    index=0
+    for x in range (len(Mass)):
+        for k in range(len(Mass)): #Тут от вершин зависит
+            Mass[k][start-1]=inf
+        for i in Mass[start-1]:
+            if i+stolbec[start-1]<stroka[Mass[start-1].index(i)]:
+                stroka[Mass[start-1].index(i)]=i+stolbec[start-1]
+        while j!=len(stroka):
+            if stroka[j] != inf:
+                if type(stroka[j])==int:
+                    if stroka[j]<=min and not(j in List):
+                        min=stroka[j]
+                        index=j
+            j+=1
+        j=0
+
+        List.append(index)
+        stolbec[index] = min #не забыть убрать stolbec[start - 1]
+        start = index + 1
+        min=inf
+        if stolbec[end-1]!=0:
+            break
+
+    dist=stolbec[end-1]
+    road=[end]
+    roadstr=''
+    b=0
+    while dist!=0:
+        i=0
+        while i<len(Mass1[end-1]):
+
+            if (dist-Mass1[i][end-1]==stolbec[i]):
+                if dist-Mass1[i][end-1]==0 and i!=startpos-1:
+                    b=1
+                if b!=1:
+                    dist=dist-Mass1[i][end-1]
+                    road.append(i+1)
+                    end=i+1
+                    i=inf
+            b=0
+            i+=1
+    road.reverse()
+    min1=inf
+    Mass=deepcopy(Mass1)
+    for i in range(1,len(road)):
+        if Mass[road[i-1]-1][road[i]-1]<=min1:
+            min1=Mass[road[i-1]-1][road[i]-1]
+    for i in range(1, len(road)):
+        Mass[road[i-1]-1][road[i]-1]=Mass[road[i-1]-1][road[i]-1]-min1
+        Mass[road[i] - 1][road[i - 1] - 1] = Mass[road[i] - 1][road[i - 1] - 1] + min1
+        if Mass[road[i] - 1][road[i-1]-1]==inf:
+            Mass[road[i] - 1][road[i-1]-1]=min1
+        if Mass[road[i-1]-1][road[i]-1]==0:
+            Mass[road[i - 1] - 1][road[i] - 1]=inf
+    min1=inf
+for i in range(len(Mass1)):
+    for j in range(len(Mass1)):
+        if Copy[i][j]!=inf:
+            if Mass1[i][j] == inf:
+                Copy[i][j]='0/'+str(Copy[i][j])
+            if Mass1[i][j] != inf:
+                Copy[i][j] = str(Mass1[i][j])+'/'+ str(Copy[i][j])
+for i in range(len(Copy)):
+    print(Copy[i])

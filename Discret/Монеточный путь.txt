@@ -1,0 +1,126 @@
+import math
+q=math.inf
+I=-1
+_=-1
+# I, _ означают стены, а q означает пустое пространство
+Zone = [
+    [I,_,_,_,_,_,I],
+    [I,q,q,q,q,q,I],
+    [I,q,q,q,I,q,I],
+    [I,q,q,q,I,q,I],
+    [I,q,q,q,q,q,I],
+    [I,q,_,_,q,q,I],
+    [I,q,I,I,q,q,I],
+    [I,_,_,_,_,_,I]
+]
+print("Напишите Координаты точки старта размерности",len(Zone)-2,"X",len(Zone[0])-2," через пробел (сначало строка, потом столбец): ")
+while True:
+    StartX, StartY = input().split(' ')
+    StartX = int(StartX)
+    StartY = int(StartY)
+    if Zone[StartX][StartY]!=-1:
+        Zone[StartX][StartY]=0
+        break
+    else:
+        print("В заданной координате расположена стена. Выберите другую координату")
+print("Терперь напишите Координаты точки старта размерности",len(Zone)-2,"X",len(Zone[0])-2,"через пробел (сначало строка, потом столбец): ")
+while True:
+    EndX, EndY = input().split(' ')
+    EndX = int(EndX)
+    EndY = int(EndY)
+    if Zone[EndX][EndY]==q:
+        break
+    else:
+        print("В заданной координате расположена стена или точка старта. Выберите другую координату")
+Perebor=1
+for t in range(5):
+    for j in range(1,len(Zone)-1):
+        for k in range(1,len(Zone[0])-1):
+            if Zone[j][k]==Perebor-1:
+                if Zone[j][k + 1]>Perebor:
+                    Zone[j][k + 1]=Perebor
+                if Zone[j + 1][k + 1] > Perebor:
+                    Zone[j + 1][k + 1] = Perebor
+                if Zone[j + 1][k]>Perebor:
+                    Zone[j + 1][k]=Perebor
+                if Zone[j + 1][k-1]>Perebor:
+                    Zone[j + 1][k - 1]=Perebor
+                if Zone[j][k-1]>Perebor:
+                    Zone[j][k - 1]=Perebor
+                if Zone[j - 1][k - 1]>Perebor:
+                    Zone[j - 1][k - 1]=Perebor
+                if Zone[j - 1][k]>Perebor:
+                    Zone[j - 1][k]=Perebor
+                if Zone[j - 1][k+1]>Perebor:
+                    Zone[j -1][k + 1]=Perebor
+
+    Perebor+=1
+point=Zone[EndX][EndY]
+Path=[[EndX, EndY]]
+for j in range(1, len(Zone) - 1):
+    for k in range(1, len(Zone[0]) - 1):
+        if Zone[j][k]>=point:
+            Zone[j][k]=q
+Zone[EndX][EndY]='e'
+j=EndX
+k=EndY
+point=point-1
+while point !=0:
+    while True:
+        if Zone[j][k + 1] == point:
+            Path.append([j, k + 1])
+            point=point-1
+            j=j
+            k=k+1
+            break
+        if Zone[j + 1][k + 1] == point:
+            Path.append([j + 1, k + 1])
+            point = point - 1
+            j=j + 1
+            k=k + 1
+            break
+        if Zone[j + 1][k] == point:
+            Path.append([j + 1, k])
+            point = point - 1
+            j=j+1
+            k=k
+            break
+        if Zone[j + 1][k - 1] == point:
+            Path.append([j + 1, k - 1])
+            point = point - 1
+            j=j+1
+            k=k-1
+            break
+        if Zone[j][k - 1] == point:
+            Path.append([j, k - 1])
+            point = point - 1
+            j=j
+            k=k-1
+            break
+        if Zone[j - 1][k - 1] == point:
+            Path.append([j - 1, k - 1])
+            point = point - 1
+            j=j-1
+            k=k-1
+            break
+        if Zone[j - 1][k] == point:
+            Path.append([j - 1, k])
+            point = point - 1
+            j=j-1
+            k=k
+            break
+        if Zone[j - 1][k + 1] == point:
+            Path.append([j - 1, k + 1])
+            point = point - 1
+            j=j-1
+            k=k+1
+            break
+Zone[StartX][StartY]='s'
+for j in range(len(Zone)):
+    print(Zone[j])
+Path.append([StartX, StartY])
+Path.reverse()
+Way=''
+for i in Path:
+    Way=Way+str(i[0])+','+str(i[1])+'->'
+print('Итоговый путь от начала до конца пути',Way[:-2])
