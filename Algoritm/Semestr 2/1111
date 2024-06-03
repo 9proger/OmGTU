@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;
+
+namespace ConsoleApplication5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите цифру для выбора пункта меню\n1. Count\n2. BinSearch\n3. Copy\n4. IndexOf\n5. Insert\n6. Reverse\n7. Sort\n8. Add\n0. Выход из программы");
+                int k = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+                Array array = Array.CreateInstance(typeof(int), 5);
+                array.SetValue(0, 5);
+                array.SetValue(1, 7);
+                array.SetValue(2, 0);
+                array.SetValue(3, -3);
+                array.SetValue(4, 2);
+                if (k == 0)
+                {
+                    break;
+                }
+                if (k == 1)
+                {
+                    int numbers = array.Length;
+                    Console.Write("Количество элементов в массиве: ");
+                    Console.WriteLine(numbers);
+                    Console.WriteLine();
+                }
+                if (k == 2)
+                {
+
+                    Array.Sort(array);
+                    int chizlo = Array.BinarySearch(array, 2);
+                    Console.Write("Данное число стоит под индексом: ");
+                    Console.WriteLine(chizlo);
+                    Console.WriteLine();
+                }
+                if (k == 3)
+                {
+                    Array Copiya = Array.CreateInstance(typeof(int), array.Length);
+                    array.CopyTo(Copiya, array.Length);
+                    Console.WriteLine("Скопированный массив: ");
+                    foreach(int i in Copiya)
+                    {
+                        Console.Write(i + " ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+                if(k == 4)
+                {
+                    
+                    int Indeoxof = Array.IndexOf(array,7);
+                    if(Indeoxof == -1)
+                    {
+                        Console.WriteLine("Данный элемент отсутствует в массиве!");
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Индекс первого вхождения данного элемента: ");
+                        Console.WriteLine(Indeoxof);
+                    }
+                }
+                if(k == 5)
+                {
+                    int first = Array.Find<int>((int[])array,x=>x>3);
+                    int last = Array.FindLast<int>((int[])array, x => x > 3);
+                    Console.WriteLine("Find: ");// Не нужен
+
+                    Console.WriteLine(first);
+                    Console.WriteLine(last);
+                }
+                if (k==6)
+                {
+                    Array.Reverse(array);
+                    Console.WriteLine("Реверснутый список");
+                    foreach (int i in array)
+                    {
+                        Console.Write(i + " ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+                if(k==7)
+                {
+                    Array.Sort(array);
+                    Console.WriteLine("Отсортированный список");
+                    foreach (int i in array)
+                    {
+                        Console.Write(i + " ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+                if (k==8)
+                {
+                    Console.WriteLine("Уменьшенный до 3 список");
+                    Array.Resize(ref array, 3);
+                    foreach (int i in array)
+                    {
+                        Console.Write(i + " ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+        }
+    }
+}
+}
