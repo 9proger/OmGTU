@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;
+
+namespace ConsoleApplication5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите цифру для выбора пункта меню\n1. Add\n2. IndexOfValue\n3. IndexOfKey\n0. Выход из программы");
+                int k = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+                SortedList mySL = new SortedList();
+                mySL.Add(1, 4);
+                mySL.Add(3, -3);
+                mySL.Add(2, 10);
+                if (k == 0)
+                {
+                    break;
+                }
+                if (k == 1)
+                {
+                    Console.Write("Напишите какое число добавить в SortedList: ");
+                    int numbers = Convert.ToInt32(Console.ReadLine());
+                    mySL.Add((mySL.Count)+1, numbers);
+                    foreach (object i in mySL)
+                    {
+                        Console.Write(i + " ");
+                    }
+                }
+                if (k == 2)
+                {
+                    Console.Write("Число 10 стоит под индексом: ");
+                    Console.Write(mySL.IndexOfValue(10));
+                    Console.WriteLine();
+
+                }
+                if (k == 3)
+                {
+                    Console.Write("Ключ 1 стоит под индексом: ");
+                    Console.Write(mySL.IndexOfKey(1));
+                    Console.WriteLine();
+                }
+                
+            }
+        }
+    }
+}
