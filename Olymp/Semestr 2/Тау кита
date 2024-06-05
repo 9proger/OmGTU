@@ -1,0 +1,59 @@
+def tau_kita_to_human(word):
+    human_word = ''
+    if len(word)%2 !=0:
+        i=0
+        j=1
+        while len(human_word) !=len(word):
+            if len(human_word) !=len(word):
+                human_word = word[-j] + human_word
+                j+=1
+            if len(human_word) !=len(word):
+                human_word=word[i]+human_word
+                i+=1
+    if len(word)%2 == 0:
+        i = 0
+        j = 1
+        while len(human_word) != len(word):
+            if len(human_word) != len(word):
+                human_word = word[i] + human_word
+                i += 1
+            if len(human_word) != len(word):
+                human_word = word[-j] + human_word
+                j += 1
+    return human_word
+
+
+#Считывание исходной строки из файла
+with open(r'C:\Users\intel\Desktop\Files\input_s1_02.txt', 'r') as file:
+    tau_kita_phrase = file.readline().strip()
+
+#Разбиение строки на слова
+words = tau_kita_phrase.split()
+
+#Преобразование каждого слова в человеческий формат
+human_interpretation = [tau_kita_to_human(word) for word in words]
+human_word=''
+if len(human_interpretation)%2 != 0:
+    i = 0
+    j = 1
+    while len(human_word.split()) != len(human_interpretation):
+        if len(human_word.split()) != len(human_interpretation):
+            human_word = human_interpretation[-j]+' '+ human_word
+            j += 1
+        if len(human_word.split()) != len(human_interpretation):
+            human_word = human_interpretation[i]+' '+ human_word
+            i += 1
+if len(human_interpretation)%2 == 0:
+    i = 0
+    j = 1
+    while len(human_word.split()) != len(human_interpretation):
+        if len(human_word.split()) != len(human_interpretation):
+            human_word = human_interpretation[i] +' '+ human_word
+            i += 1
+        if len(human_word.split()) != len(human_interpretation):
+            human_word = human_interpretation[-j] +' '+ human_word
+            j += 1
+
+#Запись результата в файл
+with open(r'C:\Users\intel\Desktop\Files\Output.txt', 'w') as file:
+    file.write(human_word)
