@@ -31,7 +31,6 @@ def build_city_chains(cities):
     chains.sort(reverse=True)
     return chains
 
-# Reading input file and writing output file
 with open('E:\Diskretka\input_s1_08.txt', 'r') as input_file, open('E:\Diskretka\Output.txt', 'w') as output_file:
     cities = [line.strip() for line in input_file]
     chains = build_city_chains(cities)
