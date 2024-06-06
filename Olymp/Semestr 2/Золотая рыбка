@@ -1,0 +1,56 @@
+def read_input(file_name):
+    with open(file_name, 'r') as file:
+        n = int(file.readline().strip())
+        words = [file.readline().strip() for _ in range(n)]
+
+        # Пропускаем пустые строки
+        f_line = file.readline().strip()
+        while not f_line:
+            f_line = file.readline().strip()
+        f = int(f_line)
+
+        start_constraints = {}
+        for _ in range(f):
+            line = file.readline().strip()
+            b, k = line.split()
+            start_constraints[b] = int(k)
+
+        # Пропускаем пустые строки
+        l_line = file.readline().strip()
+        while not l_line:
+            l_line = file.readline().strip()
+        l = int(l_line)
+
+        end_constraints = {}
+        for _ in range(l):
+            line = file.readline().strip()
+            b, k = line.split()
+            end_constraints[b] = int(k)
+
+    return words, start_constraints, end_constraints
+
+
+def count_wishes(words, start_constraints, end_constraints):
+    start_usage = {letter: 0 for letter in start_constraints}
+    end_usage = {letter: 0 for letter in end_constraints}
+
+    wishes = 0
+    for word in words:
+        start_letter = word[0]
+        end_letter = word[-1]
+
+        if start_letter in start_usage and end_letter in end_usage:
+            if start_usage[start_letter] < start_constraints[start_letter] and end_usage[end_letter] < end_constraints[
+                end_letter]:
+                start_usage[start_letter] += 1
+                end_usage[end_letter] += 1
+                wishes += 1
+
+    return wishes
+
+
+# Пример использования функций
+file_name = 'input_s1_02.txt'
+words, start_constraints, end_constraints = read_input(file_name)
+wishes = count_wishes(words, start_constraints, end_constraints)
+print(f'Старик может выполнить {wishes} желаний.')
