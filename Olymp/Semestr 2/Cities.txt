@@ -1,0 +1,41 @@
+def build_city_chains(cities):
+    city_dict = {}
+    for city in cities:
+        first_letter = city[0]
+        if first_letter not in city_dict:
+            city_dict[first_letter] = []
+        city_dict[first_letter].append(city)
+
+    chains = []
+    visited = set()
+
+    for city in cities:
+        if city not in visited:
+            visited.add(city)
+            chain_length = 0
+            stack = [city]  # Stack to perform iterative DFS
+
+            while stack:
+                current_city = stack.pop()
+                chain_length += 1
+                first_letter = current_city[-1]
+                next_cities = city_dict.get(first_letter, [])
+
+                for next_city in next_cities:
+                    if next_city not in visited:
+                        visited.add(next_city)
+                        stack.append(next_city)
+
+            chains.append(chain_length)
+
+    chains.sort(reverse=True)
+    return chains
+
+# Reading input file and writing output file
+with open('E:\Diskretka\input_s1_08.txt', 'r') as input_file, open('E:\Diskretka\Output.txt', 'w') as output_file:
+    cities = [line.strip() for line in input_file]
+    chains = build_city_chains(cities)
+
+    output_file.write(str(len(chains)) + '\n')
+    for chain_length in chains:
+        output_file.write(str(chain_length) + '\n')
